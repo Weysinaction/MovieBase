@@ -80,11 +80,10 @@ class ViewController: UIViewController {
         guard let imageURL = URL(string: "\(url)\(path)"),
               let imageData = try? Data(contentsOf: imageURL) else { return UIImage() }
 
-        if let image = UIImage(data: imageData) {
-            return image
-        } else {
-            return UIImage()
-        }
+        guard let image = (UIImage(data: imageData) != nil) ? UIImage(data: imageData) : UIImage()
+        else { return UIImage() }
+
+        return image
     }
 
     private func setupDescriptionLabel() {
