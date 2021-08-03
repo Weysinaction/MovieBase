@@ -4,14 +4,13 @@
 import UIKit
 
 /// FilmTableViewCell-
-class FilmTableViewCell: UITableViewCell {
+final class FilmTableViewCell: UITableViewCell {
     // MARK: View elements
 
-    var film: FilmModel?
     let titleLabel = UILabel()
     let descriptionLabel = UILabel()
     let imageViewFilm = UIImageView()
-    let cellView = UIView()
+    private let cellView = UIView()
 
     // MARK: FilmTableViewCell methods
 
@@ -41,36 +40,40 @@ class FilmTableViewCell: UITableViewCell {
     // MARK: private methods
 
     private func setupBackgroundView() {
-        cellView.backgroundColor = .yellow
-        cellView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        cellView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        cellView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        cellView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1).isActive = true
-        // cellView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        cellView.translatesAutoresizingMaskIntoConstraints = false
+        cellView.layer.borderWidth = 1
+        cellView.layer.borderColor = UIColor.darkGray.cgColor
+        cellView.layer.cornerRadius = 8
+        cellView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+        cellView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        cellView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+        cellView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
     }
 
     private func setupImageView() {
-        imageViewFilm.image = film?.filmImage
-        imageViewFilm.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25).isActive = true
-        imageViewFilm.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10).isActive = true
-        imageViewFilm.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: 10).isActive = true
-        imageViewFilm.leftAnchor.constraint(equalTo: cellView.leftAnchor, constant: 10).isActive = true
-        // imageViewFilm.rightAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: 10).isActive = true
+        imageViewFilm.translatesAutoresizingMaskIntoConstraints = false
+        imageViewFilm.layer.cornerRadius = 8
+        imageViewFilm.topAnchor.constraint(equalTo: cellView.topAnchor).isActive = true
+        imageViewFilm.bottomAnchor.constraint(equalTo: cellView.bottomAnchor).isActive = true
+        imageViewFilm.leftAnchor.constraint(equalTo: cellView.leftAnchor).isActive = true
+        imageViewFilm.widthAnchor.constraint(equalTo: cellView.widthAnchor, multiplier: 0.4).isActive = true
     }
 
     private func setupTitleLabel() {
-        titleLabel.text = film?.title
-        titleLabel.leftAnchor.constraint(equalTo: imageViewFilm.rightAnchor, constant: 10).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: cellView.rightAnchor, constant: 10).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: 10).isActive = true
+        titleLabel.numberOfLines = 2
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.leftAnchor.constraint(equalTo: imageViewFilm.rightAnchor, constant: 8).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: cellView.rightAnchor, constant: -8).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 8).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor).isActive = true
     }
 
     private func setupDescriptionLabel() {
-        titleLabel.text = film?.description
+        descriptionLabel.numberOfLines = 7
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.leftAnchor.constraint(equalTo: imageViewFilm.rightAnchor, constant: 10).isActive = true
-        descriptionLabel.rightAnchor.constraint(equalTo: cellView.rightAnchor, constant: 10).isActive = true
+        descriptionLabel.rightAnchor.constraint(equalTo: cellView.rightAnchor, constant: -10).isActive = true
         descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
-        descriptionLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: 10).isActive = true
+        descriptionLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10).isActive = true
     }
 }
