@@ -5,13 +5,13 @@ import Foundation
 
 /// FilmRequestModel-
 struct FilmRequestModel: Decodable {
-    var page: Int?
-    var results: [Film]?
+    let page: Int?
+    let results: [Film]?
 }
 
 /// Film-
 struct Film: Decodable {
-    var posterPath: String?
-    var overview: String?
-    var originalTitle: String?
+    let posterPath: String?
+    let overview: String?
+    let originalTitle: String?
 }
