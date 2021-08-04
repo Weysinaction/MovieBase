@@ -17,7 +17,7 @@
 		E02FF01826B0139C00E3C2E4 /* MovieBaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02FF01726B0139C00E3C2E4 /* MovieBaseUITests.swift */; };
 		E02FF02826B1F28700E3C2E4 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02FF02726B1F28700E3C2E4 /* CategoryViewController.swift */; };
 		E02FF02A26B3FC4B00E3C2E4 /* FilmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02FF02926B3FC4B00E3C2E4 /* FilmTableViewCell.swift */; };
-		E02FF02C26B4000E00E3C2E4 /* FilmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02FF02B26B4000D00E3C2E4 /* FilmModel.swift */; };
+		E02FF02E26B96C5800E3C2E4 /* FilmRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02FF02D26B96C5700E3C2E4 /* FilmRequestModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +54,7 @@
 		E02FF01926B0139C00E3C2E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E02FF02726B1F28700E3C2E4 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		E02FF02926B3FC4B00E3C2E4 /* FilmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmTableViewCell.swift; sourceTree = "<group>"; };
-		E02FF02B26B4000D00E3C2E4 /* FilmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmModel.swift; sourceTree = "<group>"; };
+		E02FF02D26B96C5700E3C2E4 /* FilmRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmRequestModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +109,7 @@
 				E02FEFF726B0139500E3C2E4 /* SceneDelegate.swift */,
 				E02FF02726B1F28700E3C2E4 /* CategoryViewController.swift */,
 				E02FF02926B3FC4B00E3C2E4 /* FilmTableViewCell.swift */,
-				E02FF02B26B4000D00E3C2E4 /* FilmModel.swift */,
+				E02FF02D26B96C5700E3C2E4 /* FilmRequestModel.swift */,
 				E02FEFF926B0139500E3C2E4 /* ViewController.swift */,
 				E02FEFFB26B0139500E3C2E4 /* Main.storyboard */,
 				E02FEFFE26B0139B00E3C2E4 /* Assets.xcassets */,
@@ -309,9 +309,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E02FF02826B1F28700E3C2E4 /* CategoryViewController.swift in Sources */,
-				E02FF02C26B4000E00E3C2E4 /* FilmModel.swift in Sources */,
 				E02FEFFA26B0139500E3C2E4 /* ViewController.swift in Sources */,
 				E02FEFF626B0139500E3C2E4 /* AppDelegate.swift in Sources */,
+				E02FF02E26B96C5800E3C2E4 /* FilmRequestModel.swift in Sources */,
 				E02FEFF826B0139500E3C2E4 /* SceneDelegate.swift in Sources */,
 				E02FF02A26B3FC4B00E3C2E4 /* FilmTableViewCell.swift in Sources */,
 			);

@@ -4,15 +4,17 @@
 import UIKit
 
 /// CategoryViewController-
-class CategoryViewController: UIViewController {
+final class CategoryViewController: UIViewController {
     // MARK: View elements
 
-    var filmTableView = UITableView()
+    private var filmTableView = UITableView()
 
     // MARK: private properties
 
-    let filmCellID = "FilmCell"
-    var arrayOfFilms: [FilmModel] = []
+    private let filmCellID = "FilmCell"
+    private let apiURL = "https://api.themoviedb.org/3/movie/popular?api_key=23df17499c6157c62e263dc10faac033"
+    private let imagePath = "https://image.tmdb.org/t/p/w500"
+    private var filmsArray: [Film] = []
 
     // MARK: CategoryViewController
 
@@ -20,6 +22,7 @@ class CategoryViewController: UIViewController {
         super.viewDidLoad()
 
         setupViewController()
+        getDataFromServer()
     }
 
     // MARK: Private methods
@@ -28,16 +31,34 @@ class CategoryViewController: UIViewController {
         view.backgroundColor = .red
         title = "Films"
 
-        setupData()
         setupTableView()
     }
 
-    private func setupData() {
-        guard let image = UIImage(systemName: "person.fill") else { return }
+    private func getDataFromServer() {
+        guard let url =
+            URL(string: apiURL)
+        else { return }
 
-        arrayOfFilms.append(FilmModel(title: "Трансформеры 1", filmImage: image, description: "desc"))
-        arrayOfFilms.append(FilmModel(title: "Убийство в восточном экспрессе", filmImage: image, description: "desc"))
-        arrayOfFilms.append(FilmModel(title: "Достать ножи", filmImage: image, description: "desc"))
+        let session = URLSession.shared
+        session.dataTask(with: url) { data, response, error in
+            guard let response = response, let data = data else { return }
+            print(response)
+
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let filmRequestModel = try decoder.decode(FilmRequestModel.self, from: data)
+
+                guard let films = filmRequestModel.results else { return }
+                self.filmsArray = films
+
+                DispatchQueue.main.async {
+                    self.filmTableView.reloadData()
+                }
+            } catch {
+                print(error)
+            }
+        }.resume()
     }
 
     private func setupTableView() {
@@ -47,6 +68,31 @@ class CategoryViewController: UIViewController {
         filmTableView.delegate = self
         filmTableView.dataSource = self
         view.addSubview(filmTableView)
+        filmTableView.translatesAutoresizingMaskIntoConstraints = false
+        filmTableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        filmTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        filmTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        filmTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
+    private func configureCell(cell: FilmTableViewCell, indexPath: IndexPath) {
+        let film = filmsArray[indexPath.row]
+
+        if let title = film.originalTitle {
+            cell.titleLabel.text = title
+        }
+        if let overview = film.overview {
+            cell.descriptionLabel.text = overview
+        }
+
+        DispatchQueue.global().async {
+            guard let imageURL = URL(string: "\(self.imagePath)\(film.posterPath ?? "")") else { return }
+            guard let imageData = try? Data(contentsOf: imageURL) else { return }
+
+            DispatchQueue.main.async {
+                cell.imageViewFilm.image = UIImage(data: imageData)
+            }
+        }
     }
 }
 
@@ -54,7 +100,7 @@ class CategoryViewController: UIViewController {
 
 extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        arrayOfFilms.count
+        filmsArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,13 +108,25 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
             .dequeueReusableCell(withIdentifier: filmCellID, for: indexPath) as? FilmTableViewCell
         else { return UITableViewCell() }
 
-        let currentItem = indexPath.row
-        cell.film = arrayOfFilms[currentItem]
+        configureCell(cell: cell, indexPath: indexPath)
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         200
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = ViewController()
+
+        let currentItem = indexPath.row
+        guard let title = filmsArray[currentItem].originalTitle,
+              let overview = filmsArray[currentItem].overview,
+              let imagePath = filmsArray[currentItem].posterPath else { return }
+        vc.filmTitle = title
+        vc.filmDescription = overview
+        vc.path = imagePath
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
